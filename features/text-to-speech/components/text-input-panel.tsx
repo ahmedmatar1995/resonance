@@ -9,6 +9,7 @@ import { useStore } from "@tanstack/react-form";
 import { useTypedAppFormContext } from "@/hooks/use-app-form";
 import { GenerateButton } from "./generate-button";
 import { tssFormOptions } from "./text-to-speech-form";
+import { cn } from "@/lib/utils";
 
 export function TextInputPanel() {
   const form = useTypedAppFormContext(tssFormOptions);
@@ -67,6 +68,18 @@ export function TextInputPanel() {
               {TEXT_MAX_LENGTH.toLocaleString()} characters
             </span>
           </p>
+          {text.length > 0 && (
+            <GenerateButton
+              size="default"
+              disabled={isSubmitting || !isValid}
+              isSubmitting={isSubmitting}
+              className={cn(
+                "w-fit hidden lg:block",
+                isSubmitting && "flex items-center",
+              )}
+              onSubmit={() => form.handleSubmit()}
+            />
+          )}
         </div>
       </div>
     </div>
