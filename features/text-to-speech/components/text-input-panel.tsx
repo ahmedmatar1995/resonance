@@ -10,6 +10,10 @@ import { useTypedAppFormContext } from "@/hooks/use-app-form";
 import { GenerateButton } from "./generate-button";
 import { tssFormOptions } from "./text-to-speech-form";
 import { cn } from "@/lib/utils";
+import { SettingsDrawer } from "./settings-drawer";
+import { HistoryDrawer } from "./history-drawer";
+import { VoiceSelectorButton } from "./voice-selector-button";
+import { PromptSuggestions } from "./prompt-suggestion";
 
 export function TextInputPanel() {
   const form = useTypedAppFormContext(tssFormOptions);
@@ -56,25 +60,30 @@ export function TextInputPanel() {
           </div>
         ) : (
           <div className="hidden lg:block">
-            <p className="text-sm text-muted-foreground">
-              Get Started by typing or paste text here
-            </p>
+            <PromptSuggestions
+              onSelect={(prompt) => form.setFieldValue("text", prompt)}
+            />
           </div>
         )}
-        <div className="flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <p className="text-xs tracking-tight">
             {text.length.toLocaleString()} &nbsp;/&nbsp;
             <span className="text-xs text-muted-foreground">
               {TEXT_MAX_LENGTH.toLocaleString()} characters
             </span>
           </p>
+          <div className="flex items-center gap-2">
+            <SettingsDrawer>
+              <VoiceSelectorButton />
+            </SettingsDrawer>
+          </div>
           {text.length > 0 && (
             <GenerateButton
               size="default"
               disabled={isSubmitting || !isValid}
               isSubmitting={isSubmitting}
               className={cn(
-                "w-fit hidden lg:block",
+                "w-full lg:w-fit hidden lg:block",
                 isSubmitting && "flex items-center",
               )}
               onSubmit={() => form.handleSubmit()}

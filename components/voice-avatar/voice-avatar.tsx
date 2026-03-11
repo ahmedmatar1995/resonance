@@ -1,7 +1,7 @@
 "use client";
 
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useVoiceAvatar } from "./use-voice-avatar";
 
 interface VoiceAvatarProps {
